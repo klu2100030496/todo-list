@@ -34,6 +34,11 @@ class TodoManager {
   }
 
   editTodo(id, updatedTask) {
+      /**
+       * Finds a todo item in the todos array by its ID
+       * @param {number|string} id - The unique identifier of the todo item to find
+       * @returns {Object|undefined} The found todo item or undefined if not found
+       */
       const todo = this.todos.find((t) => t.id === id);
       if (todo) {
         todo.task = updatedTask;
@@ -43,11 +48,23 @@ class TodoManager {
     }
   
     deleteTodo(id) {
+      /**
+       * Removes a todo item from the list based on its ID
+       * @param {number} id - The unique identifier of the todo item to be removed
+       * @returns {void} This method does not return a value
+       */
       this.todos = this.todos.filter((todo) => todo.id !== id);
       this.saveToLocalStorage();
     }
   
     toggleTodoStatus(id) {
+      ```
+      /**
+       * Finds a todo item in the todos array by its id
+       * @param {number|string} id - The unique identifier of the todo item to find
+       * @returns {object|undefined} The found todo item object, or undefined if not found
+       */
+      ```
       const todo = this.todos.find((t) => t.id === id);
       if (todo) {
         todo.completed = !todo.completed;
@@ -67,8 +84,16 @@ class TodoManager {
         case "all":
           return this.todos;
         case "pending":
+          /**
+           * Filters the todos array to return only the uncompleted todos.
+           * @returns {Array} An array containing only the uncompleted todo items.
+           */
           return this.todos.filter((todo) => !todo.completed);
         case "completed":
+          /**
+           * Filters and returns an array of completed todos.
+           * @returns {Array} An array containing only the completed todo items.
+           */
           return this.todos.filter((todo) => todo.completed);
         default:
           return [];
@@ -123,7 +148,17 @@ class UIManager {
 
       // Event listeners for filter buttons
       const filterButtons = document.querySelectorAll(".todos-filter li");
+      /**
+       * Adds click event listeners to filter buttons for handling todo filtering
+       * @param {NodeList} filterButtons - The collection of filter buttons
+       * @returns {void} This function does not return a value
+       */
       filterButtons.forEach((button) => {
+          /**
+           * Adds a click event listener to a button that handles filtering todos based on the button's status.
+           * @param {HTMLElement} button - The button element to attach the event listener to.
+           * @returns {void} This function does not return a value.
+           */
           button.addEventListener("click", () => {
               const status = button.textContent.toLowerCase();
               this.handleFilterTodos(status);
@@ -165,6 +200,11 @@ class UIManager {
           return;
         }
         
+      /**
+       * Renders a list of todo items in the UI.
+       * @param {Array} todos - An array of todo objects to be rendered.
+       * @returns {void} This method doesn't return a value, it updates the DOM directly.
+       */
       todos.forEach((todo) => {
         this.todosListBody.innerHTML += `
           <tr class="todo-item" data-id="${todo.id}">
@@ -196,11 +236,20 @@ class UIManager {
 
   
 handleEditTodo(id) {
+  /**
+   * Finds a todo item by its ID
+   * @param {string|number} id - The unique identifier of the todo item to find
+   * @returns {object|undefined} The found todo item, or undefined if not found
+   */
   const todo = this.todoManager.todos.find((t) => t.id === id);
   if (todo) {
     this.taskInput.value = todo.task;
     this.todoManager.deleteTodo(id);
 
+    /**
+     * Handles the update operation for a todo item
+     * @returns {void} This function doesn't return a value
+     */
     const handleUpdate = () => {
       this.addBtn.innerHTML = "<i class='bx bx-plus bx-sm'></i>";
       this.showAlertMessage("Todo updated successfully", "success");
@@ -243,7 +292,13 @@ const alertBox = `
 this.alertMessage.innerHTML = alertBox;
 this.alertMessage.classList.remove("hide");
 this.alertMessage.classList.add("show");
-setTimeout(() => {
+```
+/**
+ * Hides the alert message after a 3-second delay.
+ * @returns {undefined} This function does not return a value.
+ */
+
+```setTimeout(() => {
   this.alertMessage.classList.remove("show");
   this.alertMessage.classList.add("hide");
 }, 3000);
@@ -268,7 +323,17 @@ init() {
 }
 
 addThemeEventListeners() {
+  /**
+   * Attaches click event listeners to theme elements and handles theme selection
+   * @param {NodeList} this.themes - Collection of theme elements
+   * @returns {void} This method does not return a value
+   */
   this.themes.forEach((theme) => {
+    /**
+     * Event listener for theme selection
+     * @param {Event} event - The click event object
+     * @returns {void} This function doesn't return a value
+     */
     theme.addEventListener("click", () => {
       const themeName = theme.getAttribute("theme");
       this.setTheme(themeName);
